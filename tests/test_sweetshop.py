@@ -34,5 +34,17 @@ class TestSweetShop(unittest.TestCase):
         self.assertNotIn(1002, self.manager.sweets)
 
 
+
+    def test_view_sweets(self):
+        # Add two sweets
+        self.manager.add_sweet(1001, "Kaju Katli", "Nut-Based", 50, 20)
+        self.manager.add_sweet(1002, "Gajar Halwa", "Vegetable-Based", 30, 15)
+
+        sweets = self.manager.view_sweets()
+        self.assertEqual(len(sweets), 2)
+        self.assertEqual(sweets[0]["name"], "Kaju Katli")
+
+
+
 if __name__ == "__main__":
     unittest.main()

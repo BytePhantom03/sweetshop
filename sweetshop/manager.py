@@ -18,4 +18,8 @@ class SweetManager:
             del self.sweets[sweet_id]
             return True
         return False
+    
+    def view_sweets(self):
+        return list(self.sweets.values())
+
 
