@@ -7,6 +7,17 @@ class SweetManager:
     def add_sweet(self, sweet_id, name, category, price, quantity):
         if sweet_id in self.sweets:
             raise ValueError(f"Sweet with ID {sweet_id} already exists.")
+        if sweet_id is None or not str(sweet_id).strip():
+            raise ValueError("Sweet ID must be a non-empty string or number.")
+        # Reject Nagative Sweet Id
+        if isinstance(sweet_id, int) and sweet_id < 0:
+            raise ValueError("Sweet ID cannot be a negative number.")
+        if not name.strip() or not category.strip():
+            raise ValueError("Name and category must not be empty.")
+        if price < 0:
+            raise ValueError("Price cannot be negative.")
+        if quantity <= 0:
+            raise ValueError("Quantity cannot be negative.")
         sweet = Sweet(sweet_id, name, category, price, quantity)
         self.sweets[sweet_id] = sweet
         return sweet.to_dict()

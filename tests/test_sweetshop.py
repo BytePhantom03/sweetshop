@@ -22,6 +22,63 @@ class TestSweetShop(unittest.TestCase):
         with self.assertRaises(ValueError):
             self.manager.add_sweet(1001, "Another Sweet", "Candy", 25, 10)
 
+    def test_add_sweet_with_empty_id(self):
+        with self.assertRaises(ValueError):
+            self.manager.add_sweet("", "Ladoo", "Dry", 10, 5)
+
+    def test_add_sweet_with_whitespace_id(self):
+        with self.assertRaises(ValueError):
+            self.manager.add_sweet("   ", "Ladoo", "Dry", 10, 5)
+
+    def test_add_sweet_with_none_id(self):
+        with self.assertRaises(ValueError):
+            self.manager.add_sweet(None, "Ladoo", "Dry", 10, 5)
+
+    def test_add_sweet_with_negative_price(self):
+        with self.assertRaises(ValueError):
+            self.manager.add_sweet("NEG1", "Ladoo", "Dry", -10, 5)
+
+    def test_add_sweet_with_negative_quantity(self):
+        with self.assertRaises(ValueError):
+            self.manager.add_sweet("NEG2", "Ladoo", "Dry", 10, -5)
+
+    def test_add_sweet_with_empty_name(self):
+        with self.assertRaises(ValueError):
+            self.manager.add_sweet("EMPTY_NAME", "", "Dry", 10, 5)
+
+    def test_add_sweet_with_empty_category(self):
+        with self.assertRaises(ValueError):
+            self.manager.add_sweet("EMPTY_CAT", "Ladoo", "", 10, 5)
+    
+    def test_add_sweet_with_spaces_only_name(self):
+        with self.assertRaises(ValueError):
+            self.manager.add_sweet("S123", "   ", "Milk", 10, 5)
+
+    def test_add_sweet_with_spaces_only_category(self):
+        with self.assertRaises(ValueError):
+            self.manager.add_sweet("S124", "Rasgulla", "   ", 10, 5)
+
+
+    def test_add_sweet_with_special_characters_in_id(self):
+        sweet = self.manager.add_sweet("S@#123", "Barfi", "Milk-Based", 30, 10)
+        self.assertEqual(sweet["id"], "S@#123")
+        self.assertIn("S@#123", self.manager.sweets)
+
+    def test_add_sweet_with_numeric_string_id(self):
+        sweet = self.manager.add_sweet("001", "Chocolate", "Candy", 5, 25)
+        self.assertEqual(sweet["id"], "001")
+        self.assertIn("001", self.manager.sweets)
+
+    def test_add_sweet_with_integer_id_zero(self):
+        sweet = self.manager.add_sweet(0, "ZeroSweet", "Special", 15, 5)
+        self.assertEqual(sweet["id"], 0)
+        self.assertIn(0, self.manager.sweets)
+
+    def test_add_sweet_with_negative_integer_id(self):
+        with self.assertRaises(ValueError):
+            self.manager.add_sweet(-10, "InvalidID", "Error", 10, 5)
+
+
 
     def test_delete_sweet(self):
         # First, add a sweet
