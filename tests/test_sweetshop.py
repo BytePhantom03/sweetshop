@@ -17,6 +17,12 @@ class TestSweetShop(unittest.TestCase):
         self.assertEqual(sweet["name"], "Kaju Katli")
         self.assertEqual(len(self.manager.sweets), 1)
 
+    def test_add_duplicate_sweet_id(self):
+        self.manager.add_sweet(1001, "Kaju Katli", "Nut-Based", 50, 20)
+        with self.assertRaises(ValueError):
+            self.manager.add_sweet(1001, "Another Sweet", "Candy", 25, 10)
+
+
     def test_delete_sweet(self):
         # First, add a sweet
         self.manager.add_sweet(

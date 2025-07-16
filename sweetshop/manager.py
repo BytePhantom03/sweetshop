@@ -3,6 +3,8 @@ class SweetManager:
         self.sweets = {}
 
     def add_sweet(self, sweet_id, name, category, price, quantity):
+        if sweet_id in self.sweets:
+            raise ValueError(f"Sweet with ID {sweet_id} already exists.")
         sweet = {
             "id": sweet_id,
             "name": name,
