@@ -1,3 +1,5 @@
+from sweetshop.models import Sweet
+
 class SweetManager:
     def __init__(self):
         self.sweets = {}
@@ -5,15 +7,9 @@ class SweetManager:
     def add_sweet(self, sweet_id, name, category, price, quantity):
         if sweet_id in self.sweets:
             raise ValueError(f"Sweet with ID {sweet_id} already exists.")
-        sweet = {
-            "id": sweet_id,
-            "name": name,
-            "category": category,
-            "price": price,
-            "quantity": quantity
-        }
+        sweet = Sweet(sweet_id, name, category, price, quantity)
         self.sweets[sweet_id] = sweet
-        return sweet
+        return sweet.to_dict()
     
     def delete_sweet(self, sweet_id):
         if sweet_id in self.sweets:
@@ -22,6 +18,6 @@ class SweetManager:
         return False
     
     def view_sweets(self):
-        return list(self.sweets.values())
+        return [s.to_dict() for s in self.sweets.values()]
 
 
