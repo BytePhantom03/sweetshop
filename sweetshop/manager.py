@@ -17,7 +17,7 @@ class SweetManager:
         if price < 0:
             raise ValueError("Price cannot be negative.")
         if quantity <= 0:
-            raise ValueError("Quantity cannot be negative.")
+            raise ValueError("Quantity Must More Than 0.")
         sweet = Sweet(sweet_id, name, category, price, quantity)
         self.sweets[sweet_id] = sweet
         return sweet.to_dict()

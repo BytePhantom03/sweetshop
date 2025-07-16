@@ -106,6 +106,20 @@ class TestSweetShop(unittest.TestCase):
         sweets = self.manager.view_sweets()
         self.assertEqual(len(sweets), 2)
         self.assertEqual(sweets[0]["name"], "Kaju Katli")
+    
+    def test_view_sweets_when_empty(self):
+        sweets = self.manager.view_sweets()
+        self.assertEqual(sweets, [])
+
+    def test_view_sweets_with_many_items(self):
+        for i in range(100):
+            self.manager.add_sweet(f"S{i}", f"Sweet{i}", "Bulk", 10 + i, i+1)
+        sweets = self.manager.view_sweets()
+        self.assertEqual(len(sweets), 100)
+        self.assertEqual(sweets[0]["name"], "Sweet0")
+        self.assertEqual(sweets[-1]["name"], "Sweet99")
+
+
 
     
     def test_search_sweets_by_name(self):
