@@ -46,6 +46,17 @@ class SweetManager:
 
         sweet.quantity -= quantity
         return True
+    
+
+    def restock_sweet(self, sweet_id, quantity):
+        if sweet_id not in self.sweets:
+            raise ValueError("Sweet not found.")
+        if quantity <= 0:
+            raise ValueError("Restock quantity must be positive.")
+
+        self.sweets[sweet_id].quantity += quantity
+        return True
+
 
 
 

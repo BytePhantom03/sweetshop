@@ -83,6 +83,14 @@ class TestSweetShop(unittest.TestCase):
         with self.assertRaises(ValueError):
             self.manager.purchase_sweet(1007, 5)
 
+    def test_restock_sweet(self):
+        self.manager.add_sweet(1008, "Soan Papdi", "Flaky", 15, 5)
+        result = self.manager.restock_sweet(1008, 10)
+        self.assertTrue(result)
+        sweet = self.manager.sweets[1008]
+        self.assertEqual(sweet.quantity, 15)
+
+
 
 
 
