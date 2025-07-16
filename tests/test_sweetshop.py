@@ -141,6 +141,42 @@ class TestSweetShop(unittest.TestCase):
         self.assertEqual(len(results), 1)
         self.assertEqual(results[0]["name"], "Ladoo")
 
+    def test_search_combined_filters(self):
+        self.manager.add_sweet(1200, "Rasmalai", "Milk-Based", 50, 10)
+        results = self.manager.search_sweets(name="ras", category="Milk-Based", min_price=40, max_price=60)
+        self.assertEqual(len(results), 1)
+
+    def test_search_no_results(self):
+        self.manager.add_sweet(1201, "Sandesh", "Milk-Based", 50, 10)
+        results = self.manager.search_sweets(name="xyz")
+        self.assertEqual(results, [])
+
+    def test_search_name_case_insensitive(self):
+        self.manager.add_sweet(1300, "Chikki", "Crunchy", 25, 5)
+        results = self.manager.search_sweets(name="CHIKKI")
+        self.assertEqual(len(results), 1)
+
+    def test_search_price_at_boundary(self):
+        self.manager.add_sweet(1301, "Jalebi", "Sweet", 30, 5)
+        results = self.manager.search_sweets(min_price=30, max_price=30)
+        self.assertEqual(len(results), 1)
+
+    def test_search_invalid_price_range(self):
+        self.manager.add_sweet(1302, "Imarti", "Sweet", 45, 5)
+        with self.assertRaises(ValueError):
+            self.manager.search_sweets(min_price=60, max_price=30)
+
+
+    def test_search_partial_match_fails_due_to_price(self):
+        self.manager.add_sweet(1303, "Barfi", "Milk-Based", 90, 5)
+        results = self.manager.search_sweets(name="bar", category="Milk-Based", min_price=10, max_price=50)
+        self.assertEqual(results, []) 
+
+
+
+
+
+
 
     def test_purchase_sweet_success(self):
         self.manager.add_sweet(1006, "Barfi", "Milk-Based", 25, 10)
@@ -177,11 +213,6 @@ class TestSweetShop(unittest.TestCase):
         self.assertEqual(updated["category"], "Festival")
         self.assertEqual(updated["price"], 20)
         self.assertEqual(updated["quantity"], 40)
-
-
-
-
-
 
 
 if __name__ == "__main__":
