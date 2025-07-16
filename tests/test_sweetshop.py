@@ -71,6 +71,20 @@ class TestSweetShop(unittest.TestCase):
         self.assertEqual(results[0]["name"], "Ladoo")
 
 
+    def test_purchase_sweet_success(self):
+        self.manager.add_sweet(1006, "Barfi", "Milk-Based", 25, 10)
+        result = self.manager.purchase_sweet(1006, 3)
+        self.assertTrue(result)
+        sweet = self.manager.sweets[1006]
+        self.assertEqual(sweet.quantity, 7)
+
+    def test_purchase_sweet_insufficient_stock(self):
+        self.manager.add_sweet(1007, "Peda", "Milk-Based", 20, 2)
+        with self.assertRaises(ValueError):
+            self.manager.purchase_sweet(1007, 5)
+
+
+
 
 
 if __name__ == "__main__":
