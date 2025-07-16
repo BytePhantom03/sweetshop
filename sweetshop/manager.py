@@ -19,5 +19,21 @@ class SweetManager:
     
     def view_sweets(self):
         return [s.to_dict() for s in self.sweets.values()]
+    
+
+    def search_sweets(self, name=None, category=None, min_price=None, max_price=None):
+        results = []
+        for sweet in self.sweets.values():
+            if name and name.lower() not in sweet.name.lower():
+                continue
+            if category and sweet.category != category:
+                continue
+            if min_price is not None and sweet.price < min_price:
+                continue
+            if max_price is not None and sweet.price > max_price:
+                continue
+            results.append(sweet.to_dict())
+        return results
+
 
 
