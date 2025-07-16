@@ -12,3 +12,10 @@ class SweetManager:
         }
         self.sweets[sweet_id] = sweet
         return sweet
+    
+    def delete_sweet(self, sweet_id):
+        if sweet_id in self.sweets:
+            del self.sweets[sweet_id]
+            return True
+        return False
+
