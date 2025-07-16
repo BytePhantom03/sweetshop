@@ -90,6 +90,24 @@ class TestSweetShop(unittest.TestCase):
         sweet = self.manager.sweets[1008]
         self.assertEqual(sweet.quantity, 15)
 
+    
+    def test_update_sweet(self):
+        self.manager.add_sweet(1009, "Jalebi", "Sugar-Based", 15, 30)
+
+        updated = self.manager.update_sweet(
+            sweet_id=1009,
+            name="Jalebi Special",
+            category="Festival",
+            price=20,
+            quantity=40
+        )
+
+        self.assertEqual(updated["name"], "Jalebi Special")
+        self.assertEqual(updated["category"], "Festival")
+        self.assertEqual(updated["price"], 20)
+        self.assertEqual(updated["quantity"], 40)
+
+
 
 
 

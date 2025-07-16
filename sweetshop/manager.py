@@ -56,6 +56,20 @@ class SweetManager:
 
         self.sweets[sweet_id].quantity += quantity
         return True
+    
+
+    def update_sweet(self, sweet_id, name=None, category=None, price=None, quantity=None):
+        if sweet_id not in self.sweets:
+            raise ValueError("Sweet not found.")
+
+        sweet = self.sweets[sweet_id]
+        if name: sweet.name = name
+        if category: sweet.category = category
+        if price is not None: sweet.price = price
+        if quantity is not None: sweet.quantity = quantity
+
+        return sweet.to_dict()
+
 
 
 
